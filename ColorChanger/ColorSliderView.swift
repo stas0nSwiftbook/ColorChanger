@@ -12,7 +12,7 @@ struct ColorSliderView: View {
     @Binding var sliderValue: Double
     let sliderRange: ClosedRange<Double>
     let color: Color
-    
+    var focused: FocusState<Field?>.Binding
     @State private var textFieldValue = ""
     @State private var alertIsShown = false
     
@@ -27,17 +27,16 @@ struct ColorSliderView: View {
                     textFieldValue = "\(lround(sliderValue))"
                 }
             
-            TextField("", text: $textFieldValue, onCommit: checkInput)
+            TextField("", text: $textFieldValue, onEditingChanged: { _ in checkInput() })
                 .frame(width: 45)
                 .textFieldStyle(.roundedBorder)
                 .onAppear {
                     textFieldValue = "\(lround(sliderValue))"
                 }
-                .onChange(of: textFieldValue) { _ in
-                    checkInput()
-                }
+                .keyboardType(.decimalPad)
+                .focused(focused, equals: .red)
                 .alert("Wrong input", isPresented: $alertIsShown, actions: {}) {
-                    Text("Number must be in range\nfrom 0 to 255.\nPlease enter value again.")
+                    Text("Number must be from 0 to 255. Please enter value again.")
                 }
         }
         .foregroundColor(color)
@@ -55,9 +54,10 @@ struct ColorSliderView: View {
 
 struct ColorSlider_Previews: PreviewProvider {
     @State static var sliderValue = 125.0
+    @FocusState static var focusedField: Field?
     static let range: ClosedRange<Double> = 0...255
     
     static var previews: some View {
-        ColorSliderView(sliderValue: $sliderValue, sliderRange: range, color: .red)
+        ColorSliderView(sliderValue: $sliderValue, sliderRange: range, color: .red, focused: $focusedField)
     }
 }

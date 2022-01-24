@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Field: Int, Hashable {
+enum Field {
     case red, green, blue
 }
 
@@ -16,6 +16,7 @@ struct MainView: View {
     @State private var redSliderValue = Double.random(in: 0...255)
     @State private var greenSliderValue = Double.random(in: 0...255)
     @State private var blueSliderValue = Double.random(in: 0...255)
+    @FocusState private var focusedField: Field?
 
     private let sliderRange: ClosedRange<Double> = 0...255
     
@@ -28,13 +29,35 @@ struct MainView: View {
                     blue: blueSliderValue/255,
                     opacity: 1.0))
             
-            ColorSliderView(sliderValue: $redSliderValue, sliderRange: sliderRange, color: .red)
-            ColorSliderView(sliderValue: $greenSliderValue, sliderRange: sliderRange, color: .green)
-            ColorSliderView(sliderValue: $blueSliderValue, sliderRange: sliderRange, color: .blue)
+            ColorSliderView(
+                sliderValue: $redSliderValue,
+                sliderRange: sliderRange,
+                color: .red,
+                focused: $focusedField)
+            ColorSliderView(
+                sliderValue: $greenSliderValue,
+                sliderRange: sliderRange,
+                color: .green,
+                focused: $focusedField)
+            ColorSliderView(
+                sliderValue: $blueSliderValue,
+                sliderRange: sliderRange,
+                color: .blue,
+                focused: $focusedField)
             
             Spacer()
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    Button("Done") {
+                        focusedField = nil
+                    }
+                }
+            }
+        }
     }
 }
 
