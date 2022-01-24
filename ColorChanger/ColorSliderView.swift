@@ -41,13 +41,6 @@ struct ColorSliderView: View {
                 }
         }
         .foregroundColor(color)
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Button("Done") {
-                    
-                }
-            }
-        }
     }
     
     private func checkInput() {
