@@ -12,13 +12,13 @@ enum Field: Int, Hashable {
 }
 
 struct MainView: View {
-    
-    private let sliderRange: ClosedRange<Double> = 0...255
-    
+        
     @State private var redSliderValue = Double.random(in: 0...255)
     @State private var greenSliderValue = Double.random(in: 0...255)
     @State private var blueSliderValue = Double.random(in: 0...255)
 
+    private let sliderRange: ClosedRange<Double> = 0...255
+    
     var body: some View {
         VStack {
             ColorRectangleView()
