@@ -23,14 +23,14 @@ struct ColorSliderView: View {
             
             Slider(value: $sliderValue, in: sliderRange)
                 .tint(color)
+                .onChange(of: sliderValue) { _ in
+                    textFieldValue = "\(lround(sliderValue))"
+                }
             
             TextField("", text: $textFieldValue, onCommit: checkInput)
                 .frame(width: 45)
                 .textFieldStyle(.roundedBorder)
                 .onAppear {
-                    textFieldValue = "\(lround(sliderValue))"
-                }
-                .onChange(of: sliderValue) { _ in
                     textFieldValue = "\(lround(sliderValue))"
                 }
                 .onChange(of: textFieldValue) { _ in
