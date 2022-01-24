@@ -16,7 +16,7 @@ struct MainView: View {
     @State private var redSliderValue = Double.random(in: 0...255)
     @State private var greenSliderValue = Double.random(in: 0...255)
     @State private var blueSliderValue = Double.random(in: 0...255)
-    @FocusState private var focusedField: Field?
+    @FocusState private var focused: Bool
 
     private let sliderRange: ClosedRange<Double> = 0...255
     
@@ -33,17 +33,17 @@ struct MainView: View {
                 sliderValue: $redSliderValue,
                 sliderRange: sliderRange,
                 color: .red,
-                focused: $focusedField)
+                focused: $focused)
             ColorSliderView(
                 sliderValue: $greenSliderValue,
                 sliderRange: sliderRange,
                 color: .green,
-                focused: $focusedField)
+                focused: $focused)
             ColorSliderView(
                 sliderValue: $blueSliderValue,
                 sliderRange: sliderRange,
                 color: .blue,
-                focused: $focusedField)
+                focused: $focused)
             
             Spacer()
         }
@@ -53,7 +53,7 @@ struct MainView: View {
                 HStack {
                     Spacer()
                     Button("Done") {
-                        focusedField = nil
+                        focused = false
                     }
                 }
             }
