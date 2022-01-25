@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-enum Field {
-    case red, green, blue
-}
 
 struct MainView: View {
         
